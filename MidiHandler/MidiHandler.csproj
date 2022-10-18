@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>LPD8VMCL</AssemblyName>
+    <ApplicationIcon>LPD8VMCL.ico</ApplicationIcon>
+    <StartupObject>MidiHandler.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="LPD8VMCL.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio.Midi" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>
