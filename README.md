@@ -21,6 +21,6 @@ If you have an LPD8 MIDI controller and want to use it with Voicemeeter Macro Bu
 
 A workaround would be to program the LPD8 with the editor to use toggle instead of momentary, however this applies to PAD and CC and won't let you see the Macro Button status when triggering the Macro Buttons from any other source (click, keyboard shortcut, trigger from a strip). Since the LPD8 editor does not give a lot of control over the configuration of the PAD or CC, but only over the button itself, there is no way to have some PADs as trigger and their CCs as momentary.
 
-This tiny tool will create a virtual MIDI device that sits between the LPD8 and VoiceMeeter and replays all note on and note off messages it received from Macro Buttons to the LPD8 every 50ms. So releasing the pad will turn the LED off, but if Macro Buttons has sent a note on MIDI message to turn the LED on, it will turn on within 50ms. Also after switching programs. This is also helpful to visualise strip triggered Macro Button events (like ducking or peaking).
+This tiny tool will create a virtual MIDI device that sits between the LPD8 and VoiceMeeter and replays all note on and note off messages it received from Macro Buttons to the LPD8 every 50ms. So releasing the pad will turn the LED off, but if Macro Buttons has sent a note on MIDI message to turn the LED on, it will turn on within 50ms. Also after switching programs.
 
 Now your LPD8 can show the correct button state of Macro Buttons! Yay!
