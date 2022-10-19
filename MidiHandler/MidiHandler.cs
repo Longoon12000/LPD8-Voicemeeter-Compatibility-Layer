@@ -80,15 +80,18 @@ namespace MidiHandler
                     command.CopyTo(rawCommand, 0);
 
                     MidiEvent midiEvent = MidiEvent.FromRawMessage(BitConverter.ToInt32(rawCommand));
-                    if (midiEvent is NoteEvent midiNoteEvent)
+                    MidiEvent? sameTargetEvent = midiEvent switch
                     {
-                        NoteEvent? sameNoteEvent = repeatNoteEvents.FirstOrDefault(m => m.NoteNumber == midiNoteEvent.NoteNumber);
-                        if (sameNoteEvent is not null)
-                        {
-                            repeatNoteEvents.Remove(sameNoteEvent);
-                        }
-                        repeatNoteEvents.Add(midiNoteEvent);
+                        NoteEvent midiNoteEvent => repeatMidiEvents.OfType<NoteEvent>().FirstOrDefault(m => m.NoteNumber == midiNoteEvent.NoteNumber),
+                        ControlChangeEvent midiControlChangeEvent => repeatMidiEvents.OfType<ControlChangeEvent>().FirstOrDefault(m => m.Controller == midiControlChangeEvent.Controller),
+                        _ => null
+                    };
+
+                    if (sameTargetEvent is not null)
+                    {
+                        repeatMidiEvents.Remove(sameTargetEvent);
                     }
+                    repeatMidiEvents.Add(midiEvent);
 
                     midiOut!.SendBuffer(command);
                 }
@@ -102,9 +105,9 @@ namespace MidiHandler
             {
                 try
                 {
-                    foreach (NoteEvent noteEvent in repeatNoteEvents)
+                    foreach (MidiEvent midiEvent in repeatMidiEvents)
                     {
-                        midiOut!.Send(noteEvent.GetAsShortMessage());
+                        midiOut!.Send(midiEvent.GetAsShortMessage());
                     }
                     await Task.Delay(50);
                 }
@@ -112,7 +115,7 @@ namespace MidiHandler
             }
         }
 
-        List<NoteEvent> repeatNoteEvents = new List<NoteEvent>();
+        List<MidiEvent> repeatMidiEvents = new List<MidiEvent>();
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
