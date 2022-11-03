@@ -133,11 +133,13 @@ namespace MidiHandler
             if (midiIn is not null)
             {
                 midiIn.Stop();
+                midiIn.Close();
                 midiIn = null;
             }
 
             if (midiOut is not null)
             {
+                midiOut.Close();
                 midiOut = null;
             }
 
