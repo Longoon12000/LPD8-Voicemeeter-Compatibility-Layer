@@ -205,5 +205,81 @@ namespace MidiHandler
                 start(midiDevice);
             }
         }
+
+        private void reconnectPhyiscalMIDIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists("./settings"))
+            {
+                MessageBox.Show("Can only reconnect physical MIDI device when device is enabled.", "Not enabled", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            try
+            {
+                string deviceName;
+                MidiDevice? midiDevice;
+
+                List<MidiDevice> midiDevices = new List<MidiDevice>();
+                for (int deviceNumber = 0; deviceNumber < MidiIn.NumberOfDevices; deviceNumber++)
+                {
+                    midiDevices.Add(new MidiDevice()
+                    {
+                        InputDeviceNumber = deviceNumber,
+                        DeviceName = MidiIn.DeviceInfo(deviceNumber).ProductName
+                    });
+                }
+
+                for (int deviceNumber = 0; deviceNumber < MidiOut.NumberOfDevices; deviceNumber++)
+                {
+                    deviceName = MidiOut.DeviceInfo(deviceNumber).ProductName;
+                    midiDevice = midiDevices.FirstOrDefault(d => d.DeviceName == deviceName);
+                    if (midiDevice is not null)
+                    {
+                        midiDevice.OutputDeviceNumber = deviceNumber;
+                    }
+                }
+
+                deviceName = File.ReadAllText("./settings");
+                midiDevice = midiDevices.FirstOrDefault(d => d.DeviceName == deviceName);
+                if (midiDevice is null)
+                {
+                    MessageBox.Show($"Could not find MIDI device with name \"{deviceName}\".", "Failed to load MIDI device", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                if (midiIn != null)
+                {
+                    try
+                    {
+                        midiIn.Stop();
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        midiIn.Close();
+                    }
+                    catch (Exception) { }
+                }
+
+                if (midiOut != null)
+                {
+                    try
+                    {
+                        midiOut.Close();
+                    }
+                    catch (Exception) { }
+                }
+
+                midiIn = new MidiIn(midiDevice.InputDeviceNumber!.Value);
+                midiOut = new MidiOut(midiDevice.OutputDeviceNumber!.Value);
+                midiIn.Start();
+                midiIn.MessageReceived += this.MidiIn_MessageReceived;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to reconnect to physical MIDI device: {ex.Message}", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
     }
 }

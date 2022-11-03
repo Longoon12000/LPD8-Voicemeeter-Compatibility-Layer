@@ -37,6 +37,7 @@
             this.notifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reconnectPhyiscalMIDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIconContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,15 +79,16 @@
             // notifyIconContextMenuStrip
             // 
             this.notifyIconContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reconnectPhyiscalMIDIToolStripMenuItem,
             this.resetToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.notifyIconContextMenuStrip.Name = "notifyIconContextMenuStrip";
-            this.notifyIconContextMenuStrip.Size = new System.Drawing.Size(103, 48);
+            this.notifyIconContextMenuStrip.Size = new System.Drawing.Size(205, 92);
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
@@ -94,9 +96,16 @@
             // 
             this.exitToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // reconnectPhyiscalMIDIToolStripMenuItem
+            // 
+            this.reconnectPhyiscalMIDIToolStripMenuItem.Name = "reconnectPhyiscalMIDIToolStripMenuItem";
+            this.reconnectPhyiscalMIDIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.reconnectPhyiscalMIDIToolStripMenuItem.Text = "Reconnect &Phyiscal MIDI";
+            this.reconnectPhyiscalMIDIToolStripMenuItem.Click += new System.EventHandler(this.reconnectPhyiscalMIDIToolStripMenuItem_Click);
             // 
             // MidiHandler
             // 
@@ -129,5 +138,6 @@
         private ContextMenuStrip notifyIconContextMenuStrip;
         private ToolStripMenuItem resetToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem reconnectPhyiscalMIDIToolStripMenuItem;
     }
 }
